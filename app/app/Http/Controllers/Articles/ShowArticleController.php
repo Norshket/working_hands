@@ -10,6 +10,9 @@ class ShowArticleController extends Controller
 {
     public function __invoke(Article $article, Request $request)
     {
-
+        return response()->json([
+                'response' => 'asdasdas'
+            ]
+        );
     }
 }

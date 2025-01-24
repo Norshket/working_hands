@@ -35,5 +35,5 @@ wh-migration:
 	docker compose run --rm wh-php-cli php artisan migrate
 
 wh-npm-install:
-	docker compose run --rm wh-node npm install
+	docker compose exec wh-node npm install
 

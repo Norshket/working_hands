@@ -7,6 +7,9 @@ services:
     ports:
       - "8080:80"
     command: /bin/bash -c "exec nginx -g 'daemon off;'"
+    networks:
+      app_network:
+        ipv4_address: 173.20.0.2
 
   wh-php-fpm:
     build:
@@ -14,6 +17,9 @@ services:
       dockerfile: php-fpm.docker
     volumes:
       - ./app:/app
+    networks:
+      app_network:
+        ipv4_address: 173.20.0.3
 
   wh-php-cli:
     build:
@@ -22,6 +28,9 @@ services:
     volumes:
       - ./app:/app
       - composer:/root/.composer/cache
+    networks:
+      app_network:
+        ipv4_address: 173.20.0.4
 
   wh-postgres:
     image: postgres:17.2
@@ -33,16 +42,30 @@ services:
       POSTGRES_DB: app
     ports:
       - "54321:5432"
+    networks:
+      app_network:
+        ipv4_address: 173.20.0.5
 
   wh-node:
     build:
       context: ./
       dockerfile: ./docker/node.docker
-    container_name: articles_vue
     volumes:
       - ./vue:/app
     ports:
       - "8888:8080"
+    networks:
+      app_network:
+        ipv4_address: 173.20.0.6
+
+
+
+networks:
+  app_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 173.20.0.0/16
 
 
 volumes:
