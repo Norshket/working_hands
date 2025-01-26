@@ -3,25 +3,19 @@ export default [
         path: '/register',
         name: 'register',
         component: () => import('../../view/auth/RegisterView.vue'),
+        meta: {isAuth: false, layout: 'AuthLayout'}
     },
     {
         path: '/login',
         name: 'login',
         component: () => import('../../view/auth/LoginView.vue'),
+        meta: {isAuth: false, layout: 'AuthLayout'}
+
     },
     // {
-    //     path: '/articles/create',
-    //     name: 'articles.create',
-    //     component: () => import('../../view/articles/CreateArticle.vue'),
-    // },
-    // {
-    //     path: '/articles/:id/edit',
-    //     name: 'articles.edit',
-    //     component: () => import('../../view/articles/EditArticle.vue'),
-    // },
-    // {
-    //     path: '/articles/show',
-    //     name: 'articles.create',
-    //     component: () => import('../../view/articles/ShowArticle.vue'),
+    //     path: '/profile',
+    //     name: 'profile',
+    //     component: () => import('../../view/auth/ProfileView.vue'),
+    //     meta: {isAuth: true}
     // }
 ]

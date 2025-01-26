@@ -1,15 +1,29 @@
 <template>
-  <AppNavbar/>
-  <main>
-    <RouterView/>
-  </main>
+  <component :is="currentLayout" v-if="isRouterLoaded">
+    <router-view/>
+  </component>
 </template>
 
 <script>
-import AppNavbar from "./components/AppNavbar.vue";
+import DefaultLayout from "@/layouts/DefaultLayout.vue";
+import AuthLayout from "@/layouts/AuthLayout.vue";
 
 export default {
-  components: {AppNavbar},
   name: 'App',
+  components: {
+    DefaultLayout,
+    AuthLayout,
+  },
+
+  computed: {
+    isRouterLoaded: function () {
+      return this.$route.name !== null
+    },
+
+    currentLayout: function () {
+      return this.$route.matched.slice().reverse().find(route => route.meta.layout)?.meta.layout || 'DefaultLayout'
+    }
+  },
+
 }
 </script>

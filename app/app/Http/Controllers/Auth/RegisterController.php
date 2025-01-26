@@ -3,26 +3,21 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\RegisterRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response;
 
 class RegisterController extends Controller
 {
-    function register(Request $request): Response
+    function register(RegisterRequest $request): Response
     {
-        $credentials = $request->validate([
-            'email' => 'required|string|email',
-            'name' => 'required|string|max:255',
-            'password' => 'required|string',
-        ]);
+        $data = $request->validated();
 
         $user = User::create([
-            'email' => $credentials['email'],
-            'name' => $credentials['name'],
-            'password' => Hash::make($credentials['password']),
+            'email' => $data['email'],
+            'name' => $data['name'],
+            'password' => Hash::make($data['password']),
         ]);
 
         $token = $user->createToken('auth_token')->plainTextToken;

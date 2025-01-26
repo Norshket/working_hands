@@ -1,12 +1,5 @@
-#FROM node:23-alpine AS node-builder
-#WORKDIR /app
-#COPY ./package.* ./
-#RUN npm install && npm rebuild node-saas
-#COPY ./ ./
-
 FROM node:23
 
-# Install dependencies
 RUN apt-get update && apt-get install -y \
     vim \
     zip \
@@ -14,20 +7,14 @@ RUN apt-get update && apt-get install -y \
     curl
 
 
-# Установите рабочую директорию
 WORKDIR /app
 
-# Скопируйте package.json и package-lock.json в рабочую директорию
 COPY ../vue/package*.json ./
 
-# Установите зависимости
 RUN npm install
 
-# Скопируйте остальные файлы приложения
 COPY ../vue/ .
 
 EXPOSE 8080
 
-
-# Запустите приложение
 CMD ["npm", "run", "serve"]
