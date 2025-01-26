@@ -3,16 +3,14 @@
 namespace App\Http\Controllers\Articles;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Articles\ShowResource;
 use App\Models\Article;
-use Illuminate\Http\Request;
+use App\Service\Articles\ArticleServices;
 
 class ShowArticleController extends Controller
 {
-    public function __invoke(Article $article, Request $request)
+    public function __invoke(Article $article, ArticleServices $services)
     {
-        return response()->json([
-                'response' => 'asdasdas'
-            ]
-        );
+        return new ShowResource($services->show($article));
     }
 }

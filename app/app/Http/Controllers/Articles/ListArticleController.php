@@ -3,16 +3,15 @@
 namespace App\Http\Controllers\Articles;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Articles\IndexResource;
+use App\Service\Articles\ArticleServices;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class ListArticleController extends Controller
 {
-    public function __invoke(Request $request): Response
+    public function __invoke(Request $request, ArticleServices $services): JsonResource
     {
-        return response()->json([
-            'name' => 'Abigail',
-            'state' => 'CA',
-        ]);
+        return IndexResource::collection($services->getArticles([]));
     }
 }

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import AuthApi from "@/api/AuthApi";
 import ArticlesApi from "@/api/ArticlesApi";
+import HomeApi from "@/api/HomeApi";
 
 const apiClient = axios.create({
     baseURL: 'http://173.20.0.2/api',
@@ -21,5 +22,6 @@ export default apiClient;
 
 export const $api = {
     auth: new AuthApi(),
-    articles: new ArticlesApi()
+    articles: new ArticlesApi(),
+    home: new HomeApi()
 }

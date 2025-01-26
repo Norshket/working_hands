@@ -3,14 +3,19 @@
     <AppNavbar
         :menu="menu"
     />
-    <slot/>
-  </div>
+      <div class="container-fluid ">
+        <div class="row justify-content-center">
+          <slot/>
+        </div>
+    </div>
+      </div>
 </template>
 
 <script>
 
 import AppNavbar from "@/components/AppNavbar.vue";
 import config from '@/configs'
+
 export default {
 
   name: 'DefaultLayout',

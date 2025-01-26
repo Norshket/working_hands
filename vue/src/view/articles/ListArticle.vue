@@ -1,27 +1,39 @@
 <template>
-  <div>
-    ListArticle asd
-  </div>
-  <div>
+  <div class="row justify-content-around">
 
-    asdasd
+    <article-cart
+        class="my-4"
+        v-for="(item, index) in getList"
+        :key="index.id"
+        :article="item"
+    />
+
+
+
   </div>
 
 </template>
 
 
 <script>
-import {mapActions} from "vuex";
+import {mapActions, mapGetters} from "vuex";
+import ArticleCart from "@/components/Articles/Card.vue"
 
 export default {
   name: "ListArticle",
+  components: {ArticleCart},
 
   created() {
     this.getListArticles();
   },
 
-  methods:{
-    ...mapActions('articles',['getListArticles'])
+  computed: {
+    ...mapGetters('articles', ['getList'])
+
+  },
+
+  methods: {
+    ...mapActions('articles', ['getListArticles'])
   }
 
 

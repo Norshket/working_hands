@@ -23,7 +23,7 @@ docker-down:
 
 #--------------------------------------------------------------------
 
-wh-init: wh-composer-install wh-npm-install wh-wait-db wh-migration
+wh-init: wh-composer-install wh-npm-install wh-wait-db wh-generate-key wh-migration  wh-seed
 
 wh-composer-install:
 	docker compose run --rm wh-php-cli composer install
@@ -33,6 +33,12 @@ wh-wait-db:
 
 wh-migration:
 	docker compose run --rm wh-php-cli php artisan migrate
+
+wh-generate-key:
+	docker compose run --rm wh-php-cli php artisan key:generate
+
+wh-seed:
+	docker compose run --rm wh-php-cli php artisan db:seed
 
 wh-npm-install:
 	docker compose exec wh-node npm install

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -17,4 +18,9 @@ class Article extends Model
         'views',
         'likes'
     ];
+
+    public function scopeLasted(Builder $query): void
+    {
+        $query->orderBy('created_at', 'desc')->limit(6);
+    }
 }
