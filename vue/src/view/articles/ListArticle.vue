@@ -3,39 +3,58 @@
 
     <article-cart
         class="my-4"
-        v-for="(item, index) in getList"
+        v-for="(item, index) in articles"
         :key="index.id"
         :article="item"
     />
 
+    <app-pagination
+        :pagination="pagination"
+        @go-to-page="goToPage"
+    />
 
 
   </div>
-
 </template>
 
 
 <script>
-import {mapActions, mapGetters} from "vuex";
 import ArticleCart from "@/components/Articles/Card.vue"
+import AppPagination from "@/components/Pagination.vue";
+import {$api} from "@/api";
 
 export default {
   name: "ListArticle",
-  components: {ArticleCart},
+  components: {ArticleCart, AppPagination},
 
-  created() {
-    this.getListArticles();
+  data() {
+    return {
+      articles: [],
+      pagination: {}
+    }
   },
 
-  computed: {
-    ...mapGetters('articles', ['getList'])
-
+  created() {
+    this.getList()
   },
 
   methods: {
-    ...mapActions('articles', ['getListArticles'])
+    async getList(params = null) {
+      await $api.articles.index(params).then(({data}) => {
+        const [articles, pagination] = data
+        this.articles = articles
+        this.pagination = pagination
+      }).catch((errors) => {
+        console.log(errors)
+      })
+    },
+
+    goToPage(numberPage, offset) {
+      this.getList({
+        limit: numberPage,
+        offset: offset,
+      })
+    }
   }
-
-
 }
 </script>

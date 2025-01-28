@@ -8,7 +8,13 @@
 
     <ul class="header-nav mr-auto">
       <li v-for="(item) in filterMenu" class="nav-item" :key="item.key">
-        <router-link class="nav-link" :to="item.link">{{ item.text }}</router-link>
+        <router-link
+            class="nav-link"
+            :to="item.link"
+            activeClass="text-primary"
+
+        >{{ item.text }}
+        </router-link>
       </li>
 
       <li class="nav-item">

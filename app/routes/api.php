@@ -13,7 +13,7 @@ Route::get('/main', MainController::class);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [RegisterController::class, 'register']);
 
-Route::post('/articles/{id}', ShowArticleController::class);
+Route::get('/articles/{article}/show', ShowArticleController::class);
 Route::get('/articles', ListArticleController::class);
 
 Route::middleware('auth:sanctum')->group(function () {

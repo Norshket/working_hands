@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="card" style="width: 18rem;">
     <img src="/" class="card-img-top" alt="photo">
 
     <div class="card-body">
@@ -21,7 +21,7 @@
 
 <script>
 export default {
-  name: "ArticleCard",
+  name: "HomeCard",
   props: {
     article: {
       type: Object,

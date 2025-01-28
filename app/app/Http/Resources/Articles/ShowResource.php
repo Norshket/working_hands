@@ -4,6 +4,7 @@ namespace App\Http\Resources\Articles;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Str;
 
 class ShowResource extends JsonResource
 {
@@ -12,8 +13,9 @@ class ShowResource extends JsonResource
         return [
             'id'=> $this->id,
             'title'=> $this->title,
-            ''
-
+            'content' => $this->content,
+            'likes' => $this->likes,
+            'views' => $this->views,
         ];
     }
 }

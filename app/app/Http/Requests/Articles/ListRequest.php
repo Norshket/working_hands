@@ -2,20 +2,12 @@
 
 namespace App\Http\Requests\Articles;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseIndexRequest;
 
-class ListRequest extends FormRequest
+class ListRequest extends BaseIndexRequest
 {
-    public function rules(): array
-    {
-        return [
-            'page' => 'nullable|integer|min:1',
-            'limit' => 'nullable|integer|min:1',
-        ];
-    }
-
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 }

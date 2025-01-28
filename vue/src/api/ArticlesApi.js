@@ -4,8 +4,8 @@ class ArticlesApi extends BaseApi {
 
     url = 'articles'
 
-    index() {
-        return this.api().get(`${this.url}/`)
+    index(params) {
+        return this.api().get(`${this.url}/`, {params: params})
     }
 
     create(data) {

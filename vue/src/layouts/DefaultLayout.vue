@@ -4,7 +4,7 @@
         :menu="menu"
     />
       <div class="container-fluid ">
-        <div class="row justify-content-center">
+        <div class="row justify-content-center px-3 pt-3">
           <slot/>
         </div>
     </div>

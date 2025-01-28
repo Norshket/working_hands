@@ -5,14 +5,13 @@ const state = () => ({
 })
 const mutations = {
     setList(state, data) {
-
         state.list = data
     }
 }
 const actions = {
     async getListArticles({commit}) {
         await $api.articles.index().then(({data}) => {
-            commit('setList', data.data)
+            commit('setList', data)
         }).catch((errors) => {
             console.log(errors)
         })

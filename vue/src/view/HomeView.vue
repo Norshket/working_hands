@@ -1,6 +1,6 @@
 <template>
   <div class="row justify-content-around">
-    <article-cart
+    <home-card
         class="my-4"
         v-for="(item, index) in articles"
         :key="index.id"
@@ -12,12 +12,12 @@
 
 <script>
 
-import ArticleCart from "@/components/Articles/Card.vue";
+import HomeCard from "@/components/Home/Card.vue";
 
 export default {
   name: "HomeView",
 
-  components: {ArticleCart},
+  components: {HomeCard},
 
   data() {
     return {
