@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Str;
 
-class IndexResource extends JsonResource
+class ListResource extends JsonResource
 {
     public function toArray(Request $request): array
     {

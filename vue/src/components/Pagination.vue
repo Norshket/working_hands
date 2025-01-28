@@ -3,7 +3,11 @@
     <ul class="pagination">
 
       <li class="page-item">
-        <button class="page-link" @click="goToPage(pagination.currentPage - 1)" aria-label="Previous">
+        <button
+            class="page-link"
+            @click="goToPage(pagination.currentPage - 1)"
+            aria-label="Previous"
+        >
           <span aria-hidden="true">&laquo;</span>
         </button>
       </li>
@@ -18,7 +22,12 @@
       </li>
 
       <li class="page-item">
-        <button class="page-link" type="button" @click="goToPage(pagination.currentPage + 1)" aria-label="Next">
+        <button
+            class="page-link"
+            type="button"
+            @click="goToPage(pagination.currentPage + 1)"
+            aria-label="Next"
+        >
           <span aria-hidden="true">&raquo;</span>
         </button>
       </li>
@@ -50,7 +59,6 @@ export default {
   methods: {
     goToPage(pageNumber) {
       if (pageNumber <= this.pagination.lastPage && pageNumber > 0) {
-        console.log(this.pagination )
         this.$emit('goToPage', this.pagination.limit, this.pagination.limit * (pageNumber - 1))
       }
     }

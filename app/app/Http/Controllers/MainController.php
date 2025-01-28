@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\Articles\IndexResource;
+use App\Http\Resources\Articles\ListResource;
 use App\Models\Article;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -13,6 +13,6 @@ class MainController extends Controller
     {
         $lastArticle = Article::query()->lasted()->get();
 
-        return IndexResource::collection($lastArticle);
+        return ListResource::collection($lastArticle);
     }
 }

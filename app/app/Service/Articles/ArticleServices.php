@@ -2,36 +2,27 @@
 
 namespace App\Service\Articles;
 
+use App\Http\Database\ListQueryBuilder;
 use App\Models\Article;
 
 class ArticleServices
 {
-    const PER_PAGE = 6;
+    private ListQueryBuilder $listBuilder;
+
+    public function __construct(ListQueryBuilder $listBuilder)
+    {
+        $this->listBuilder = $listBuilder;
+    }
 
     public function getArticles(array $params): array
     {
-        $limit = data_get($params, 'limit', static::PER_PAGE);
-        $offset = data_get($params, 'offset');
-
         $query = Article::query()->orderBy('id', 'desc');
 
-        $count = $query->count();
+        $this->listBuilder->setParams($query, $params);
+        $articles = $this->listBuilder->buildQuery()->get();
+        $pagination = $this->listBuilder->buildPagination();
 
-        if ($offset) {
-            $query->offset($offset);
-        }
-
-        $article = $query->limit($limit)->get();
-
-
-        return [
-            'data' => $article,
-            'meta' => [
-                'total' => $count,
-                'limit' => $limit,
-                'lastPage' => round($count / $limit)
-            ],
-        ];
+        return [$articles,$pagination];
     }
 
     public function show(Article $article): Article
