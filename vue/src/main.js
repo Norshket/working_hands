@@ -5,6 +5,8 @@ import '@coreui/coreui/dist/css/coreui.min.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import store from "./store";
 import {$api} from "@/api";
+
+
 const app = createApp(App)
 
 

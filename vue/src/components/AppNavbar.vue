@@ -18,7 +18,7 @@
       </li>
 
       <li class="nav-item">
-        <button class="nav-link" v-if="isAuth" @click="logout()">Logout</button>
+        <button class="nav-link" v-if="isAuth" @click="logout">Logout</button>
       </li>
 
     </ul>

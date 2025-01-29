@@ -13,7 +13,7 @@ class ArticlesApi extends BaseApi {
     }
 
     show(id) {
-        return this.api().get(`${this.url}/${id}/show`)
+        return this.api().get(`${this.url}/${id}`)
     }
 
     update(id, data) {

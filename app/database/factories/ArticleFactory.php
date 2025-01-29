@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Article;
+use App\Models\ArticleComment;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -9,6 +11,17 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class ArticleFactory extends Factory
 {
+
+    /**
+     * Indicate that the user is suspended.
+     */
+    public function configure(): Factory
+    {
+        return $this->afterCreating(function (Article $article) {
+            ArticleComment::factory()->state(['article_id' => $article->id])->count(4)->create();
+        });
+    }
+
     /**
      * Define the model's default state.
      *
@@ -18,7 +31,7 @@ class ArticleFactory extends Factory
     {
         return [
             'title' => $this->faker->text(10),
-            'content' => $this->faker->text(500),
+            'content' => $this->faker->text(5000),
             'likes' => rand(1, 100),
             'views' => rand(1, 100),
         ];

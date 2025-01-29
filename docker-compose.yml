@@ -7,6 +7,8 @@ services:
     ports:
       - "8080:80"
     command: /bin/bash -c "exec nginx -g 'daemon off;'"
+    depends_on:
+      - wh-php-fpm
     networks:
       app_network:
         ipv4_address: 173.20.0.2
@@ -17,6 +19,9 @@ services:
       dockerfile: php-fpm.docker
     volumes:
       - ./app:/app
+    depends_on:
+      - wh-redis
+      - wh-postgres
     networks:
       app_network:
         ipv4_address: 173.20.0.3
@@ -28,6 +33,11 @@ services:
     volumes:
       - ./app:/app
       - composer:/root/.composer/cache
+    depends_on:
+      - wh-nginx
+      - wh-redis
+      - wh-postgres
+
     networks:
       app_network:
         ipv4_address: 173.20.0.4
@@ -58,6 +68,30 @@ services:
       app_network:
         ipv4_address: 173.20.0.6
 
+  wh-redis:
+    image: redis:alpine
+    ports:
+      - "6381:6379"
+    volumes:
+      - wh-redis-data:/data
+    networks:
+      app_network:
+        ipv4_address: 173.20.0.7
+
+  wh-worker:
+    build:
+      context: ./docker
+      dockerfile: php-fpm.docker
+    volumes:
+      - ./app:/app
+    command: php artisan queue:work --sleep=3 --tries=3
+    depends_on:
+      - wh-redis
+      - wh-postgres
+    networks:
+      app_network:
+        ipv4_address: 173.20.0.8
+
 networks:
   app_network:
     driver: bridge
@@ -68,4 +102,5 @@ networks:
 
 volumes:
   wh-postgres:
+  wh-redis-data:
   composer:

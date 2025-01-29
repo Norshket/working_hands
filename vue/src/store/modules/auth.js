@@ -45,18 +45,23 @@ const actions = {
 
     async logout({commit}) {
 
-        await $api.auth.logout().then(() => {
-            commit('logout')
-
-            localStorage.removeItem('auth_user')
-            localStorage.removeItem('auth_token')
-
-            router.push('/login')
-
-        })
-            .catch(error => {
-                console.log(error)
+        try {
+            await $api.auth.logout().then(() => {
+                commit('logout')
+                localStorage.removeItem('auth_token')
+                router.push('/login')
             })
+                .catch(error => {
+                    console.log(error)
+                })
+
+        } catch (error) {
+            commit('logout')
+            localStorage.removeItem('auth_token')
+            router.push('/login')
+        }
+
+
     },
 }
 const getters = {
@@ -69,7 +74,6 @@ const hasAccess = (token, accesses) => {
     if (token !== null && accesses.includes('auth')) {
         return true;
     }
-
     return token === null && accesses.includes('guest')
 }
 

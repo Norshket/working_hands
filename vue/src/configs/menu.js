@@ -3,15 +3,15 @@ export const GUEST = 'guest'
 
 export default [
     {
-        key: 'menu.articles',
-        text: 'Articles',
-        link: {name: 'articles.index'},
-        accesses: [GUEST, AUTH]
-    },
-    {
         key: 'menu.home',
         text: 'Home',
         link: {name: 'home'},
+        accesses: [GUEST, AUTH]
+    },
+    {
+        key: 'menu.articles',
+        text: 'Articles',
+        link: {name: 'articles.index'},
         accesses: [GUEST, AUTH]
     },
     {

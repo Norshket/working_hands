@@ -32,14 +32,13 @@ class ListQueryBuilder
         return $this->query;
     }
 
-
     public function buildPagination(): array
     {
         return [
             'total' => $this->count,
             'limit' => $this->limit,
             'lastPage' => round($this->count / $this->limit),
-            'currentPage' => $this->offset / $this->limit + 1
+            'currentPage' => round($this->offset / $this->limit + 1)
         ];
 
     }
