@@ -15,7 +15,7 @@ class ListResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
-            'content' => Str::limit($this->content),
+            'content' => Str::limit($this->content, 400),
             'likes' => $this->likes,
             'views' => $this->views,
         ];

@@ -9,20 +9,18 @@ use Illuminate\Support\Facades\Cache;
 class RedisCacher
 {
     private string $key;
-    private int $time;
-    private Builder $builder;
+    private array $tags;
+    private int $time = 600;
 
-    public function setParams(string $key, Builder $builder, int $time = 600): self
+    public function setParams(string $key, array $tags, int $time = 600): void
     {
         $this->key = $key;
+        $this->tags = $tags;
         $this->time = $time;
-        $this->builder = $builder;
-        return $this;
     }
 
-    public function cache(): Collection
+    public function cache(Builder $builder): Collection
     {
-        return Cache::remember($this->key, $this->time, fn() => $this->builder->get());
+        return Cache::tags($this->tags)->remember($this->key, $this->time, fn() => $builder->get());
     }
-
 }

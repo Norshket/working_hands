@@ -1,6 +1,10 @@
 <template>
   <div class="card">
-    <img src="/" class="card-img-top" alt="photo">
+    <img
+        src="https://mir-s3-cdn-cf.behance.net/project_modules/max_3840/1f157a82172987.5d3544c355668.jpg"
+        class="card-img-top"
+        alt="photo">
+
 
     <div class="card-body">
       <h5 class="card-title">{{ article.title }}</h5>

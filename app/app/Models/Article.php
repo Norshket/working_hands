@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Eloquent;
 
 /**
  * @property int $id
@@ -18,11 +19,10 @@ use Eloquent;
  * @property int $likes
  *
  * @property-read Collection|ArticleComment[] $comments
+ * @property-read Collection|Tag[] $tags
  *
  * @mixin Eloquent
  */
-
-
 class Article extends Model
 {
     use HasFactory,
@@ -43,5 +43,10 @@ class Article extends Model
     public function comments(): HasMany
     {
         return $this->hasMany(ArticleComment::class, 'article_id', 'id');
+    }
+
+    public function tags(): BelongsToMany
+    {
+        return $this->belongsToMany(Tag::class, 'article_tags', 'article_id', 'tag_id');
     }
 }

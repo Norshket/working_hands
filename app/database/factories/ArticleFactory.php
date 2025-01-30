@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Article;
 use App\Models\ArticleComment;
+use App\Models\Tag;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,6 +20,8 @@ class ArticleFactory extends Factory
     {
         return $this->afterCreating(function (Article $article) {
             ArticleComment::factory()->state(['article_id' => $article->id])->count(4)->create();
+            $tags = Tag::factory()->count(2)->create()->pluck('id');
+            $article->tags()->attach($tags);
         });
     }
 

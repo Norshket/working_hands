@@ -4,8 +4,9 @@ namespace App\Service\Articles;
 
 use App\Http\Database\ListQueryBuilder;
 use App\Http\Database\RedisCacher;
+use App\Http\Resources\Articles\ListResource;
 use App\Models\Article;
-use Illuminate\Support\Facades\Cache;
+use App\Models\Tag;
 
 class ArticleServices
 {
@@ -18,20 +19,40 @@ class ArticleServices
         $this->cacher = $cacher;
     }
 
+    public function getIndexData(array $params): array
+    {
+        $data = $this->getArticles($params);
+        $tags = Tag::get();
+
+        return [
+            'articles' => ListResource::collection($data['articles']),
+            'tags' => ListResource::collection($tags),
+            'pagination' => $data['pagination']
+        ];
+    }
+
     public function getArticles(array $params): array
     {
         $query = Article::query()->orderBy('id', 'desc');
+
         $this->listBuilder->setParams($query, $params);
         $pagination = $this->listBuilder->buildPagination();
+
         $cacheKey = 'articles.page.' . $pagination['currentPage'];
+        $cacheTags = ['articles.page'];
 
-        $articles = $this->cacher->setParams($cacheKey, $this->listBuilder->buildQuery())->cache();
+        $this->cacher->setParams($cacheKey, $cacheTags);
 
-        return [$articles, $pagination];
+        $articles = $this->cacher->cache($this->listBuilder->buildQuery());
+
+        return [
+            'articles' => $articles,
+            'pagination' => $pagination
+        ];
     }
 
     public function show(Article $article): Article
     {
-        return $article;
+        return $article->load('tags');
     }
 }

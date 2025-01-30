@@ -39,16 +39,23 @@
 
     <hr>
 
-    <div class="card mb-2" v-for="comment in comments" :key="comment.id">
-      <div class="card-header">{{ comment.title }}</div>
-      <div class="card-body">{{ comment.message }}</div>
-    </div>
+    <comment-item
+        :comments="comments"
+    />
   </div>
+
+
+
+
 </template>
 
 <script>
+
+import CommentItem from "@/components/Articles/Comments/CommentItem.vue";
+
 export default {
   name: "ArticleComments",
+  components: {CommentItem},
 
   props: {
     comments: {
