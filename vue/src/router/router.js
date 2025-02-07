@@ -2,12 +2,14 @@ import {createRouter, createWebHistory} from 'vue-router'
 import Articles from "@/router/routes/articles";
 import Auth from "@/router/routes/auth";
 import Home from "@/router/routes/home"
+import Me from "@/router/routes/me";
 
 
 const routes = [
     ...Home,
     ...Articles,
-    ...Auth
+    ...Auth,
+    ...Me
 ]
 
 const router = createRouter({

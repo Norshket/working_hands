@@ -26,5 +26,11 @@ export default [
         link: {name: 'login'},
         accesses: [GUEST]
     },
+    {
+        key: 'me.articles',
+        text: 'My Articles',
+        link: {name: 'me.articles'},
+        accesses: [AUTH]
+    },
 
 ]

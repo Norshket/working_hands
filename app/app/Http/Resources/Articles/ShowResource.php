@@ -19,6 +19,7 @@ class ShowResource extends JsonResource
             'likes' => $this->likes,
             'views' => $this->views,
             'tags' => $this->whenLoaded('tags', fn() => ListTagResource::collection($this->tags)),
+            'imageUrl' => $this->media?->first()->getFullUrl()
         ];
     }
 }

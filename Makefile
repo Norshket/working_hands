@@ -4,7 +4,7 @@ init: docker-down-clear docker-pull docker-build docker-up wh-init
 php-bash:
 	docker compose run --rm wh-php-cli bash
 node-bash:
-	docker compose run --rm wh-node bash
+	docker compose exec wh-node bash
 
 
 

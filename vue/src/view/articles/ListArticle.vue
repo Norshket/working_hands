@@ -6,10 +6,14 @@
     <div class="col-sm-12 col-md-4 ">
       <div class="sticky-top card ">
         <div class="card-header">
-          Tags
+          <h2>Tags</h2>
         </div>
         <div class="card-body">
-          <button v-for="tag in tags" :key="tag.id" class="btn badge text-bg-primary m-1">
+          <button
+              v-for="tag in tags"
+              :key="tag.id"
+              class="btn badge text-bg-primary m-1"
+          >
             {{ tag.title }}
           </button>
         </div>
@@ -54,24 +58,34 @@ export default {
   },
 
   created() {
-    this.getList()
+    this.getDataList()
+    this.getTags()
   },
 
   methods: {
-    async getList(params = null) {
-      await $api.articles.index(params).then(({data}) => {
+    async getDataList(params = null) {
+      await $api.articles.index(params)
+          .then(({data}) => this.setArticleData(data))
+          .catch((errors) => console.log(errors))
+    },
 
-        this.articles = data.articles
-        this.pagination = data.pagination
-        this.tags = data.tags
+    setArticleData(data) {
+      this.articles = data.articles
+      this.pagination = data.pagination
+    },
 
-      }).catch((errors) => {
-        console.log(errors)
-      })
+    async getTags() {
+      await $api.tags.index()
+          .then(({data}) => this.setTag(data))
+          .catch((errors) => console.log(errors))
+    },
+
+    setTag(response) {
+      this.tags = response.data
     },
 
     goToPage(numberPage, offset) {
-      this.getList({
+      this.getDataList({
         limit: numberPage,
         offset: offset,
       })

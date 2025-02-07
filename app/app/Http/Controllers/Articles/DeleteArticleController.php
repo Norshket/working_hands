@@ -8,8 +8,9 @@ use Illuminate\Http\Request;
 
 class DeleteArticleController extends Controller
 {
-    public function __invoke(Article $article, Request $request)
+    public function __invoke(Article $article)
     {
+
 
     }
 }

@@ -6,6 +6,8 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import store from "./store";
 import {$api} from "@/api";
 
+import './assets/styles/index.css';
+
 
 const app = createApp(App)
 
@@ -14,4 +16,5 @@ app.config.globalProperties.$api = $api;
 
 app.use(router)
 app.use(store)
+
 app.mount('#app')

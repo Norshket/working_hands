@@ -74,12 +74,9 @@ export default {
     },
 
     async addComment(form) {
-      await this.$api.articleComments.create(this.$route.params.id, form).then(({data}) => {
-        console.log(data)
-      })
-          .catch((errors) => {
-            console.log(errors)
-          })
+      await this.$api.articleComments.create(this.$route.params.id, form)
+          .then(({data}) => console.log(data))
+          .catch((errors) => console.log(errors) )
     }
   }
 }

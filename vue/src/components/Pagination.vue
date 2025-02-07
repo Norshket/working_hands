@@ -1,5 +1,5 @@
 <template>
-  <nav aria-label="Page navigation example">
+  <nav aria-label="Page navigation example" v-if="this.pagination.lastPage > this.pagination.limit">
     <ul class="pagination">
 
       <li class="page-item">

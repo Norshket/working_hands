@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Article;
 use App\Models\ArticleComment;
 use App\Models\Tag;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -35,6 +36,7 @@ class ArticleFactory extends Factory
         return [
             'title' => $this->faker->text(10),
             'content' => $this->faker->text(5000),
+            'user_id' => User::factory()->create()->id,
             'likes' => rand(1, 100),
             'views' => rand(1, 100),
         ];

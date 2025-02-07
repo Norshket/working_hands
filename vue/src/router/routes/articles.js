@@ -12,16 +12,10 @@ export default [
             },
 
             {
-                path: 'create',
-                name: 'articles.create',
-                component: () => import('../../view/articles/CreateArticle.vue'),
-                meta: {isAuth: true, layout: 'DefaultLayout'}
-            },
-            {
                 path: ':id/show',
                 name: 'articles.show',
                 component: () => import('../../view/articles/ShowArticle.vue'),
-                meta:{ layout: 'DefaultLayout'}
+                meta: {isAuth: false, layout: 'DefaultLayout'},
             }
         ]
     },

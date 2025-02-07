@@ -4,15 +4,13 @@ namespace App\Http\Controllers\Articles;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Articles\ListRequest;
-use App\Service\Articles\ArticleServices;
+use App\Service\Articles\ArticleService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class ListArticleController extends Controller
 {
-    public function __invoke(ListRequest $request, ArticleServices $services): JsonResponse
+    public function __invoke(ListRequest $request, ArticleService $services): JsonResponse
     {
-        $data = $services->getIndexData($request->validated());
-
-        return response()->json($data);
+        return response()->json($services->getIndexData($request->validated()));
     }
 }

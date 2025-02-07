@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Jobs;
+namespace App\Jobs\ArticleComments;
 
 use App\Models\Article;
 use Illuminate\Contracts\Queue\ShouldQueue;

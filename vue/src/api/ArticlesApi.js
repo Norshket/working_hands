@@ -9,7 +9,16 @@ class ArticlesApi extends BaseApi {
     }
 
     create(data) {
-        return this.api().post(`${this.url}/`, data)
+        let config = {headers: {'Content-Type': 'multipart/form-data'}}
+        return this.api().post(`${this.url}/`, data, config)
+    }
+
+    getCreateData() {
+        return this.api().get(`${this.url}/create`)
+    }
+
+    getEditData(id) {
+        return this.api().get(`${this.url}/${id}/edit`)
     }
 
     show(id) {
@@ -17,7 +26,9 @@ class ArticlesApi extends BaseApi {
     }
 
     update(id, data) {
-        return this.api().put(`${this.url}/${id}`, data)
+        let config = {headers: {'Content-Type': 'multipart/form-data'}}
+        data.append('_method', 'put')
+        return this.api().post(`${this.url}/${id}`, data, config)
     }
 
     delete(id) {

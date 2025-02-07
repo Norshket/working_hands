@@ -3,7 +3,7 @@
 namespace App\Service\ArticleComments;
 
 use App\Http\Database\ListQueryBuilder;
-use App\Jobs\CreateArticleComment;
+use App\Jobs\ArticleComments\CreateArticleComment;
 use App\Models\Article;
 use App\Models\ArticleComment;
 

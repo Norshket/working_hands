@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <img
-        src="https://mir-s3-cdn-cf.behance.net/project_modules/max_3840/1f157a82172987.5d3544c355668.jpg"
+        :src="article.imageUrl"
         class="card-img-top"
         alt="photo">
 
@@ -16,6 +16,16 @@
       >
         Посмотреть
       </router-link>
+
+      <router-link
+          class="btn btn-primary"
+          :to="{ name: 'me.articles.edit', params:{id: article.id}}"
+      >
+        Редактировать
+      </router-link>
+
+
+
 
     </div>
   </div>

@@ -7,11 +7,11 @@ use App\Http\Requests\Articles\UpdateRequest;
 use App\Http\Resources\Articles\ShowResource;
 use App\Models\Article;
 use App\Models\ArticleComment;
-use App\Service\Articles\ArticleServices;
+use App\Service\Articles\ArticleService;
 
 class UpdateArticleCommentController extends Controller
 {
-    public function __invoke(ArticleComment $comment, UpdateRequest $request , ArticleServices $services)
+    public function __invoke(ArticleComment $comment, UpdateRequest $request , ArticleService $services)
     {
         $data =$request->validated();
         $response = $services->update($data);

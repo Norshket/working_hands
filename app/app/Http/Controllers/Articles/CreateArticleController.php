@@ -3,15 +3,12 @@
 namespace App\Http\Controllers\Articles;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Articles\CreateRequest;
-use Illuminate\Http\Request;
+use App\Service\Articles\ArticleService;
 
 class CreateArticleController extends Controller
 {
-    public function __invoke(CreateRequest $request)
+    public function __invoke(ArticleService $service)
     {
-        $data = $request->validated();
-
-
+        return response()->json($service->getCreateData());
     }
 }
