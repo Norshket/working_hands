@@ -7,7 +7,7 @@ use App\Http\Requests\ArticleComments\CreateRequest;
 use App\Models\Article;
 use App\Service\ArticleComments\ArticleCommentServices;
 
-class CreateArticleCommentController extends Controller
+class CreateController extends Controller
 {
     public function __invoke(Article $article, CreateRequest $request, ArticleCommentServices $services)
     {

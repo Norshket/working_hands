@@ -39,7 +39,7 @@
 <script>
 export default {
   name: "CommentForm",
-  data(){
+  data() {
     return {
       form: {
         title: null,
@@ -49,8 +49,10 @@ export default {
   },
 
   methods: {
-    async addComment(form) {
-      this.$emit('addComment', form)
+    addComment() {
+      this.$emit('addComment', structuredClone(this.form))
+      this.form.title = null
+      this.form.message = null
     }
   }
 }

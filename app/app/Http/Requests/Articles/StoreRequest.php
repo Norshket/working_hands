@@ -13,7 +13,7 @@ class StoreRequest extends FormRequest
             'content' => 'required|string|min:3',
             'tags' => 'nullable|array',
             'tags.*' => 'nullable|numeric|exists:tags,id',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'image' => 'nullable|mimes:jpeg,png,jpg,gif|max:2048'
         ];
     }
 

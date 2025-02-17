@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\Articles;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Articles\ShowResource;
+use App\Http\Resources\Articles\ItemResource;
 use App\Models\Article;
 use App\Service\Articles\ArticleService;
 
-class ShowArticleController extends Controller
+class ShowController extends Controller
 {
     public function __invoke(Article $article, ArticleService $services)
     {
-        return new ShowResource($services->show($article));
+        return ItemResource::make($services->show($article));
     }
 }

@@ -4,8 +4,7 @@
       <h2>Создать статью</h2>
     </div>
     <div class="card-body">
-      <form class="row" @submit.prevent="createArticle">
-
+      <form class="row" @submit.prevent="create">
         <div class="col-4">
           <form-image
               v-model="form.imageUrl"
@@ -14,7 +13,6 @@
         </div>
 
         <div class="col-8">
-
           <div class="input-group mb-3">
             <input
                 class="form-control"
@@ -52,9 +50,7 @@
         </div>
 
       </form>
-
     </div>
-
   </div>
 </template>
 
@@ -65,17 +61,20 @@
 import Multiselect from 'vue-multiselect'
 import FormImage from "@/components/Widgets/Form/FormImage.vue";
 import {$api} from "@/api";
+import router from "@/router/router";
+import toast from "@/widgets/toaster";
 
 
 export default {
   name: "CreateArticle",
   components: {Multiselect, FormImage},
+
   data() {
     return {
       form: {
         title: null,
         content: null,
-        tags: null,
+        tags: [],
         image: null
       },
 
@@ -88,28 +87,33 @@ export default {
   },
 
   methods: {
-    async createArticle() {
-
-      const formData = new FormData();
-      formData.append('image', this.form.image)
-      formData.append('title', this.form.title)
-      this.form.tags.forEach((tag) => {
-        formData.append('tags[]', tag.id);
-      });
-
-      formData.append('content', this.form.content)
-
-      await $api.articles.create(formData)
-          .then(({data}) => console.log(data))
-          .catch(({error}) => console.log(error))
+    async getData() {
+      await $api.articles.getCreateData()
+          .then(({data}) => this.setData(data))
+          .catch((error) => console.log(error))
     },
 
-    async getData() {
-      await $api.articles.getCreateData().then(({data}) => {
-        this.tags = data.tags
-      }).catch(({error}) => {
-        console.log(error)
-      })
+    setData(data) {
+      this.tags = data.tags
+    },
+
+    async create() {
+      let requset = structuredClone(this.form)
+      requset.tags = requset.tags.map((tag) => tag.id)
+
+      await $api.articles.create(requset)
+          .then(() => this.success())
+          .catch((error) => this.error(error))
+    },
+
+    success() {
+      router.push('/me/articles')
+    },
+
+    error(error) {
+      if (error.status === 422) {
+        toast.error(error.response.data.message)
+      }
     },
 
     setFile(image) {

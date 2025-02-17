@@ -3,6 +3,7 @@ import Articles from "@/router/routes/articles";
 import Auth from "@/router/routes/auth";
 import Home from "@/router/routes/home"
 import Me from "@/router/routes/me";
+import store from "@/store";
 
 
 const routes = [
@@ -18,7 +19,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    const isAuthenticated = localStorage.getItem('auth_token');
+    const isAuthenticated = store.getters['auth/token'];
 
     if (to.meta.isAuth && !isAuthenticated) {
         next('/login');

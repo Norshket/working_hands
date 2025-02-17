@@ -7,7 +7,7 @@ use App\Models\Article;
 use App\Models\ArticleComment;
 use Illuminate\Http\Request;
 
-class DeleteArticleCommentController extends Controller
+class DeleteController extends Controller
 {
     public function __invoke(ArticleComment $comment, Request $request)
     {

@@ -10,7 +10,7 @@ const state = () => ({
         created_at: '',
         updated_at: ''
     },
-    token: localStorage.getItem('auth_token')
+    token: null
 })
 
 const mutations = {
@@ -18,13 +18,11 @@ const mutations = {
     auth(state, data) {
         state.user = data.user
         state.token = data.access_token
-        localStorage.setItem('auth_token', data.access_token);
     },
 
     logout(state) {
         state.user = null
         state.token = null
-        localStorage.removeItem('auth_token')
 
     }
 }
@@ -54,16 +52,14 @@ const actions = {
             commit('logout')
         })
             .catch((error) => {
-                if (error.status === 401) {
-                    router.push('/login')
-                    commit('logout')
-                }
+                console.log(error)
             })
     },
 }
 const getters = {
     isAuth: state => state.token !== null,
     user: state => state.user,
+    token: state => state.token,
     access: state => (...accesses) => hasAccess(state.token, ...accesses)
 }
 

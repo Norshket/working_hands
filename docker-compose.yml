@@ -84,7 +84,7 @@ services:
       dockerfile: php-fpm.docker
     volumes:
       - ./app:/app
-    command: php artisan queue:work --sleep=3 --tries=3
+    command: php artisan queue:work --sleep=3 --tries=3 # TODO переписть на супервизор
     depends_on:
       - wh-redis
       - wh-postgres

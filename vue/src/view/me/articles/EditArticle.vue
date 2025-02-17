@@ -4,19 +4,15 @@
       <h2>Редактирование</h2>
     </div>
     <div class="card-body">
-      <form class="row" @submit.prevent="createArticle">
-
-
+      <form class="row" @submit.prevent="update">
         <div class="col-4">
           <form-image
               v-model="form.imageUrl"
               @set-file="setFile"
           />
 
-
         </div>
         <div class="col-8">
-
           <div class="input-group mb-3">
             <input
                 class="form-control"
@@ -47,7 +43,6 @@
           />
         </div>
 
-
         <div class="row">
           <div class="col-6">
             <button class="btn btn-primary px-4" type="submit">Отправить</button>
@@ -55,9 +50,7 @@
         </div>
 
       </form>
-
     </div>
-
   </div>
 </template>
 
@@ -68,6 +61,8 @@
 import Multiselect from 'vue-multiselect'
 import FormImage from "@/components/Widgets/Form/FormImage.vue";
 import {$api} from "@/api";
+import router from "@/router/router";
+import toast from "@/widgets/toaster";
 
 
 export default {
@@ -78,7 +73,7 @@ export default {
       form: {
         title: null,
         content: null,
-        tags: null,
+        tags: [],
         image: null,
         imageUrl: null
       },
@@ -91,32 +86,14 @@ export default {
   },
 
   methods: {
-    async createArticle() {
-
-      const formData = new FormData();
-      formData.append('title', this.form.title)
-      formData.append('content', this.form.content)
-      formData.append('image', this.form.image)
-      this.form.tags.forEach((tag) => {
-        formData.append('tags[]', tag.id);
-      });
-
-      await $api.articles.update(this.$route.params.id, formData)
-          .then(({data}) => console.log(data))
-          .catch(({error}) => console.log(error))
-    },
-
     async getData() {
-      await $api.articles.getEditData(this.$route.params.id).then(({data}) => {
-        this.setForm(data.article)
-        this.tags = data.tags
-      }).catch(({error}) => {
-        console.log(error)
-      })
+      await $api.articles.getEditData(this.$route.params.id)
+          .then(({data}) => this.setData(data))
     },
 
-    setFile(image) {
-      this.form.image = image
+    setData(data) {
+      this.setForm(data.article)
+      this.tags = data.tags
     },
 
     setForm(article) {
@@ -124,7 +101,29 @@ export default {
       this.form.content = article.content
       this.form.tags = article.tags
       this.form.imageUrl = article.imageUrl
-    }
+    },
+
+    async update() {
+      let requset = structuredClone(this.form)
+      requset.tags = requset.tags.map((tag) => tag.id)
+      await $api.articles.update(this.$route.params.id, requset)
+          .then(() => this.success())
+          .catch((error) => this.error(error))
+    },
+
+    success() {
+      router.push('/me/articles')
+    },
+
+    error(error) {
+      if (error.status === 422) {
+        toast.error(error.response.data.message)
+      }
+    },
+
+    setFile(image) {
+      this.form.image = image
+    },
   }
 }
 </script>

@@ -1,4 +1,7 @@
 import axios from "axios";
+import store from "@/store";
+import router from "@/router/router";
+import toast from "@/widgets/toaster";
 
 class BaseApi {
 
@@ -14,16 +17,33 @@ class BaseApi {
             headers: headers ?? this.headers,
         });
 
-        this.setupInterceptions()
+        this.setupInterceptionsRequest()
+        this.setupInterceptionsResponse()
     }
 
-    setupInterceptions() {
+    setupInterceptionsRequest() {
         this.apiClient.interceptors.request.use((config) => {
-            const token = localStorage.getItem('auth_token');
+            const token = store.getters['auth/token'];
             if (token) {
                 config.headers.Authorization = `Bearer ${token}`;
             }
             return config;
+        });
+    }
+
+    setupInterceptionsResponse() {
+        this.apiClient.interceptors.response.use((response) => {
+            return response;
+        }, (error) => {
+            if (error.status === 401) {
+                store.commit('auth/logout')
+                router.push('/login');
+            }
+            if (error.status === 500 || error.code === "ERR_NETWORK") {
+                toast.error("чирик @#$^*?! кукук !!!")
+            }
+
+            return Promise.reject(error);
         });
     }
 

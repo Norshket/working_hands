@@ -1,4 +1,3 @@
-// import axios from 'axios';
 import AuthApi from "@/api/AuthApi";
 import ArticlesApi from "@/api/ArticlesApi";
 import ArticleCommentsApi from "@/api/ArticleCommentsApi";

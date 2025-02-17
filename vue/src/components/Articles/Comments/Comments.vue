@@ -27,20 +27,10 @@ export default {
     }
   },
 
-  data() {
-    return {
-      form: {
-        title: null,
-        message: null
-      }
-    }
-  },
 
   methods: {
-    async addComment() {
-      this.$emit('addComment', this.form)
-      this.form.title = null
-      this.form.message = null
+    async addComment(form) {
+      this.$emit('addComment', form)
     }
   }
 

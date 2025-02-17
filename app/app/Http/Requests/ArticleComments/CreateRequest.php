@@ -9,8 +9,8 @@ class CreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'nullable|string|max:255',
-            'message' => 'nullable|string',
+            'title' => 'required|string|max:255',
+            'message' => 'required|string',
         ];
     }
 

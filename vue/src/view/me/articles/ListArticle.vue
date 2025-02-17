@@ -10,6 +10,7 @@
           v-for="(item, index) in articles"
           :key="index.id"
           :article="item"
+          @remove-item="removeItem"
       />
 
       <app-pagination
@@ -52,6 +53,12 @@ export default {
       params = Object.assign({user_id: this.user.id}, params)
       await $api.articles.index(params)
           .then(({data}) => this.setArticleData(data))
+          .catch((errors) => console.log(errors))
+    },
+
+    removeItem(articleId) {
+      $api.articles.delete(articleId)
+          .then(() => this.getDataList())
           .catch((errors) => console.log(errors))
     },
 

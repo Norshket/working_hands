@@ -24,15 +24,12 @@
         :pagination="commentPagination"
         @add-comment="addComment"
     />
-
   </div>
-
-
 </template>
-
 
 <script>
 import ArticleComments from "@/components/Articles/Comments/Comments.vue"
+import toast from "@/widgets/toaster";
 
 export default {
   name: "ShowArticle",
@@ -54,29 +51,37 @@ export default {
 
   methods: {
     async getArticle() {
-      await this.$api.articles.show(this.$route.params.id).then(({data}) => {
-        this.article = data.data
-      })
-          .catch((errors) => {
-            console.log(errors)
-          })
+      await this.$api.articles.show(this.$route.params.id)
+          .then(({data}) => this.setArticle(data))
+    },
+
+    setArticle(data) {
+      this.article = data.data
     },
 
     async getComments() {
-      await this.$api.articleComments.index(this.$route.params.id).then(({data}) => {
-        const [comments, pagination] = data
-        this.comments = comments
-        this.commentPagination = pagination
-      })
-          .catch((errors) => {
-            console.log(errors)
-          })
+      await this.$api.articleComments.index(this.$route.params.id)
+          .then(({data}) => this.setComments(data))
+    },
+
+    setComments(data) {
+      this.comments = data.comments
+      this.commentPagination = data.pagination
     },
 
     async addComment(form) {
       await this.$api.articleComments.create(this.$route.params.id, form)
-          .then(({data}) => console.log(data))
-          .catch((errors) => console.log(errors) )
+          .then(() => this.success())
+          .catch((error) => this.error(error))
+    },
+
+    success() {
+      toast.success('Комментарий добавлен и ждёт обработки ')
+    },
+    error(error) {
+      if (error.status === 422) {
+        toast.error(error.response.data.message)
+      }
     }
   }
 }

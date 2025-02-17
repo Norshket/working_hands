@@ -7,7 +7,7 @@ use App\Http\Resources\Tags\ListTagResource;
 use App\Repositories\Tags\TagRepository;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ListTagController extends Controller
+class ListController extends Controller
 {
     public function __invoke(TagRepository $tagRepository): JsonResource
     {

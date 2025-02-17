@@ -3,8 +3,8 @@
 namespace App\Service\Articles;
 
 use App\Http\Database\ListQueryBuilder;
+use App\Http\Resources\Articles\ItemResource;
 use App\Http\Resources\Articles\ListResource;
-use App\Http\Resources\Articles\ShowResource;
 use App\Http\Resources\Articles\UpdateResource;
 use App\Http\Resources\Tags\ListTagResource;
 use App\Models\Article;
@@ -12,8 +12,8 @@ use App\Repositories\Articles\ArticleRepository;
 use App\Repositories\Tags\TagRepository;
 use App\Service\Cache\CacheService;
 use App\Service\Cache\CacheTags;
-use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class ArticleService
 {
@@ -65,31 +65,29 @@ class ArticleService
 
     public function getEditData(Article $article = null): array
     {
-        $tags = $this->tagRepository->tagQuery()->get();
-
         return [
-            'article' => isset($article) ? UpdateResource::make($article->load('tags')) : null,
-            'tags' => ListTagResource::collection($tags)
+            'article' => ItemResource::make($article->load('tags')),
+            'tags' => ListTagResource::collection($this->tagRepository->tagQuery()->get())
         ];
     }
 
     public function show(Article $article): Article
     {
-        return $article->load('tags');
+        return $article->load(['tags', 'media']);
     }
 
-    public function create(array $data): JsonResource
+    public function store(array $data): Article
     {
         $article = auth()->user()->articles()->create($data);
-        $article->tags()->sync($data['tags']);
+        $article->tags()->sync($data['tags'] ?? []);
         $article->addMedia($data['image'])->preservingOriginal()->toMediaCollection('image');
 
         Cache::tags([CacheTags::ARTICLE_INDEX])->flush();
 
-        return ShowResource::make($article->load(['tags', 'media']));
+        return $article->load(['tags', 'media']);
     }
 
-    public function update(Article $article, array $data): JsonResource
+    public function update(Article $article, array $data): Article
     {
         $article = tap($article)->update($data);
         $article->tags()->sync($data['tags']);
@@ -101,7 +99,20 @@ class ArticleService
 
         Cache::tags([CacheTags::ARTICLE_INDEX])->flush();
 
+        return $article->load(['tags', 'media']);
+    }
 
-        return ShowResource::make($article->load('tags'));
+    public function delete(Article $article): bool
+    {
+        $isDeleted = DB::transaction(function () use ($article) {
+            $article->comments()->delete();
+            return $article->delete();
+        });
+
+        if ($isDeleted) {
+            Cache::tags([CacheTags::ARTICLE_INDEX])->flush();
+        }
+
+        return $isDeleted;
     }
 }

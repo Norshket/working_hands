@@ -4,14 +4,13 @@ namespace App\Http\Controllers\Articles;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Articles\StoreRequest;
+use App\Http\Resources\Articles\ItemResource;
 use App\Service\Articles\ArticleService;
 
-class StoreArticleController extends Controller
+class StoreController extends Controller
 {
     public function __invoke(StoreRequest $request, ArticleService $services)
     {
-        $data = $request->validated();
-
-        return $services->create($data);
+        return ItemResource::make($services->store($request->validated()));
     }
 }

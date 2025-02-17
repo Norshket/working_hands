@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /** @mixin Article */
-class UpdateResource extends JsonResource
+class ItemResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
@@ -19,7 +19,7 @@ class UpdateResource extends JsonResource
             'likes' => $this->likes,
             'views' => $this->views,
             'tags' => $this->whenLoaded('tags', fn() => ListTagResource::collection($this->tags)),
-            'imageUrl' => $this->media?->first()?->getFullUrl() ?? null
+            'imageUrl' => $this->media?->first()?->getFullUrl()
         ];
     }
 }

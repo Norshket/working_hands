@@ -27,7 +27,7 @@ class ArticlesApi extends BaseApi {
 
     update(id, data) {
         let config = {headers: {'Content-Type': 'multipart/form-data'}}
-        data.append('_method', 'put')
+        data._method = 'put'
         return this.api().post(`${this.url}/${id}`, data, config)
     }
 

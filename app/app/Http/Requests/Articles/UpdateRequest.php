@@ -12,8 +12,8 @@ class UpdateRequest extends FormRequest
             'title' => 'required|string|min:3|max:255',
             'content' => 'required|string|min:3',
             'tags' => 'nullable|array',
-            'tags.*' => 'string|exists:tags,id',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'tags.*' => 'integer|exists:tags,id',
+            'image' => 'nullable|mimes:jpeg,png,jpg,gif|max:2048'
         ];
     }
 
