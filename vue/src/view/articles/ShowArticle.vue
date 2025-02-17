@@ -20,16 +20,13 @@
     </div>
 
     <article-comments
-        :comments="comments"
-        :pagination="commentPagination"
-        @add-comment="addComment"
+        :articleId="$route.params.id"
     />
   </div>
 </template>
 
 <script>
 import ArticleComments from "@/components/Articles/Comments/Comments.vue"
-import toast from "@/widgets/toaster";
 
 export default {
   name: "ShowArticle",
@@ -39,14 +36,11 @@ export default {
   data() {
     return {
       article: {},
-      comments: [],
-      commentPagination: {}
     }
   },
 
   created() {
     this.getArticle()
-    this.getComments()
   },
 
   methods: {
@@ -58,31 +52,6 @@ export default {
     setArticle(data) {
       this.article = data.data
     },
-
-    async getComments() {
-      await this.$api.articleComments.index(this.$route.params.id)
-          .then(({data}) => this.setComments(data))
-    },
-
-    setComments(data) {
-      this.comments = data.comments
-      this.commentPagination = data.pagination
-    },
-
-    async addComment(form) {
-      await this.$api.articleComments.create(this.$route.params.id, form)
-          .then(() => this.success())
-          .catch((error) => this.error(error))
-    },
-
-    success() {
-      toast.success('Комментарий добавлен и ждёт обработки ')
-    },
-    error(error) {
-      if (error.status === 422) {
-        toast.error(error.response.data.message)
-      }
-    }
   }
 }
 
