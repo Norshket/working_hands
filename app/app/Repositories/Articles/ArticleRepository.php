@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Builder;
 
 class ArticleRepository
 {
-    public function articlesQuery(array $params = []): Builder
+    public function listQuery(array $params = []): Builder
     {
         $query = Article::query()->orderBy('id', 'desc');
 
         if (isset($params['tags'])) {
-            $query->whereHas('tags', fn() => $query->whereIn('tags.id', $params['tags']));
+            $query->whereHas('tags', fn($query) => $query->whereIn('tags.id', $params['tags']));
         }
 
         if (isset($params['user_id'])) {

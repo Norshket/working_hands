@@ -11,6 +11,6 @@ class ListController extends Controller
 {
     public function __invoke(TagRepository $tagRepository): JsonResource
     {
-        return ListTagResource::collection($tagRepository->tagQuery()->get());
+        return ListTagResource::collection($tagRepository->listQuery()->get());
     }
 }

@@ -1,23 +1,12 @@
 <template>
-
-
-  <div class="row  justify-content-between">
+  <div class="row justify-content-between">
 
     <div class="col-sm-12 col-md-4 ">
-      <div class="sticky-top card ">
-        <div class="card-header">
-          <h2>Tags</h2>
-        </div>
-        <div class="card-body">
-          <button
-              v-for="tag in tags"
-              :key="tag.id"
-              class="btn badge text-bg-primary m-1"
-          >
-            {{ tag.title }}
-          </button>
-        </div>
-      </div>
+        <app-tags
+            class="sticky-top"
+            v-model="params.tags"
+            :option="tags"
+        />
     </div>
 
     <div class=" col-sm-12 col-md-8">
@@ -39,22 +28,36 @@
   </div>
 </template>
 
-
 <script>
 import ArticleCart from "@/components/Articles/Card.vue"
 import AppPagination from "@/components/Pagination.vue";
+import AppTags from "@/components/AppTags.vue";
 import {$api} from "@/api";
 
 export default {
   name: "ListArticle",
-  components: {ArticleCart, AppPagination},
+  components: {ArticleCart, AppPagination, AppTags},
 
   data() {
     return {
       articles: [],
       tags: [],
-      pagination: {}
+      pagination: {},
+      params: {
+        tags: [],
+        limit: 6,
+        offset: 0
+      }
     }
+  },
+
+  watch: {
+    params: {
+      async handler() {
+        await this.getDataList()
+      },
+      deep: true
+    },
   },
 
   created() {
@@ -63,8 +66,8 @@ export default {
   },
 
   methods: {
-    async getDataList(params = null) {
-      await $api.articles.index(params)
+    async getDataList() {
+      await $api.articles.index(this.params)
           .then(({data}) => this.setArticleData(data))
           .catch((errors) => console.log(errors))
     },
@@ -84,12 +87,11 @@ export default {
       this.tags = response.data
     },
 
-    goToPage(numberPage, offset) {
-      this.getDataList({
-        limit: numberPage,
-        offset: offset,
-      })
-    }
+    goToPage(limit, offset) {
+      this.params.limit = limit
+      this.params.offset = offset
+      this.getDataList()
+    },
   }
 }
 </script>

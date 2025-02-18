@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 class TagRepository
 {
 
-    public function tagQuery(array $params = []): Builder
+    public function listQuery(array $params = []): Builder
     {
         return Tag::query()->orderBy('id', 'desc');
     }

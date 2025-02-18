@@ -5,7 +5,6 @@ namespace App\Service\Articles;
 use App\Http\Database\ListQueryBuilder;
 use App\Http\Resources\Articles\ItemResource;
 use App\Http\Resources\Articles\ListResource;
-use App\Http\Resources\Articles\UpdateResource;
 use App\Http\Resources\Tags\ListTagResource;
 use App\Models\Article;
 use App\Repositories\Articles\ArticleRepository;
@@ -37,13 +36,13 @@ class ArticleService
 
     public function getIndexData(array $params): array
     {
-        $query = $this->articleRepository->articlesQuery($params);
+        $query = $this->articleRepository->listQuery($params);
 
         $this->listBuilder->setParams($query, $params);
         $query = $this->listBuilder->buildQuery();
         $pagination = $this->listBuilder->buildPagination();
 
-        $key = implode('.', [CacheTags::ARTICLE_INDEX, ...$params]);
+        $key = implode('.', [CacheTags::ARTICLE_INDEX, json_encode($params)]);
 
         $articles = $this->cacheService
             ->setTags([CacheTags::ARTICLE_INDEX])
@@ -57,7 +56,7 @@ class ArticleService
 
     public function getCreateData(): array
     {
-        $tags = $this->tagRepository->tagQuery()->get();
+        $tags = $this->tagRepository->listQuery()->get();
         return [
             'tags' => ListTagResource::collection($tags)
         ];
@@ -67,7 +66,7 @@ class ArticleService
     {
         return [
             'article' => ItemResource::make($article->load('tags')),
-            'tags' => ListTagResource::collection($this->tagRepository->tagQuery()->get())
+            'tags' => ListTagResource::collection($this->tagRepository->listQuery()->get())
         ];
     }
 
