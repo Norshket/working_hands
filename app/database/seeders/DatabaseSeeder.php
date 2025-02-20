@@ -7,6 +7,7 @@ use Database\Seeders\RoleSeeders\RoleSeeder;
 use Database\Seeders\TestSeeder\ArticleSeeder;
 use Database\Seeders\TestSeeder\StaffSeeder;
 use Database\Seeders\TestSeeder\TagSeeder;
+use Database\Seeders\TestSeeder\UserSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -24,7 +25,7 @@ class DatabaseSeeder extends Seeder
 
         if (env('APP_ENV') === 'local') {
             $this->call([
-
+                UserSeeder::class,
                 TagSeeder::class,
                 ArticleSeeder::class,
             ]);

@@ -11,6 +11,10 @@ return [
         PermissionHelper::ARTICLES_UPDATE,
         PermissionHelper::ARTICLES_DELETE,
 
+        PermissionHelper::ARTICLE_COMMENTS_CREATE,
+        PermissionHelper::ARTICLE_COMMENTS_UPDATE,
+        PermissionHelper::ARTICLE_COMMENTS_DELETE,
+
         PermissionHelper::USERS_READ,
         PermissionHelper::USERS_SHOW,
         PermissionHelper::USERS_CREATE,
@@ -26,6 +30,10 @@ return [
         PermissionHelper::ARTICLES_UPDATE,
         PermissionHelper::ARTICLES_DELETE,
 
+        PermissionHelper::ARTICLE_COMMENTS_CREATE,
+        PermissionHelper::ARTICLE_COMMENTS_UPDATE,
+        PermissionHelper::ARTICLE_COMMENTS_DELETE,
+
         PermissionHelper::USERS_BLOCK,
     ],
 
@@ -35,5 +43,9 @@ return [
         PermissionHelper::ARTICLES_CREATE,
         PermissionHelper::ARTICLES_UPDATE,
         PermissionHelper::ARTICLES_DELETE,
+
+        PermissionHelper::ARTICLE_COMMENTS_CREATE,
+        PermissionHelper::ARTICLE_COMMENTS_UPDATE,
+        PermissionHelper::ARTICLE_COMMENTS_DELETE,
     ],
 ];

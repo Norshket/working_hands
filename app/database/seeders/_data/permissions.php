@@ -24,6 +24,19 @@ return [
         'display_name' => PermissionHelper::ARTICLES_DELETE
     ],
     //    -----------------------------------------------------------------
+    PermissionHelper::ARTICLE_COMMENTS_CREATE => [
+        'name' => PermissionHelper::ARTICLE_COMMENTS_CREATE,
+        'display_name' => PermissionHelper::ARTICLE_COMMENTS_CREATE
+    ],
+    PermissionHelper::ARTICLE_COMMENTS_UPDATE => [
+        'name' => PermissionHelper::ARTICLE_COMMENTS_UPDATE,
+        'display_name' => PermissionHelper::ARTICLE_COMMENTS_UPDATE
+    ],
+    PermissionHelper::ARTICLE_COMMENTS_DELETE => [
+        'name' => PermissionHelper::ARTICLE_COMMENTS_DELETE,
+        'display_name' => PermissionHelper::ARTICLE_COMMENTS_DELETE
+    ],
+    //    -----------------------------------------------------------------
     PermissionHelper::USERS_READ => [
         'name' => PermissionHelper::USERS_READ,
         'display_name' => PermissionHelper::USERS_READ

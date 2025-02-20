@@ -1,6 +1,8 @@
 <template>
   <div class="col-12 m-4 bg-body-secondary rounded p-4">
-    <comment-form @add-comment="addComment"/>
+    <comment-form
+        v-if="can('article_comments_create')"
+        @add-comment="addComment"/>
     <hr>
     <comment-item :comments="comments"/>
     <comment-pagination
@@ -18,6 +20,7 @@ import CommentItem from "@/components/Articles/Comments/CommentItem.vue";
 import CommentForm from "@/components/Articles/Comments/CommentForm.vue";
 import CommentPagination from "@/components/Articles/Comments/CommentPagination.vue";
 import toast from "@/widgets/toaster";
+import {mapGetters} from "vuex";
 
 export default {
   name: "ArticleComments",
@@ -39,6 +42,10 @@ export default {
 
   created() {
     this.getComments()
+  },
+
+  computed: {
+    ...mapGetters('auth', ['can']),
   },
 
   methods: {
