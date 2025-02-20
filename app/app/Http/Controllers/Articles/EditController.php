@@ -11,6 +11,8 @@ class EditController extends Controller
 {
     public function __invoke(Article $article, ArticleService $service): JsonResponse
     {
+        $this->authorize('update', $article);
+
         return response()->json($service->getEditData($article));
     }
 }

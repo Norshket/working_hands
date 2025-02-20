@@ -20,6 +20,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
  * @property string $content
  * @property int $views
  * @property int $likes
+ * @property int $user_id
  *
  * @property-read Collection|ArticleComment[] $comments
  * @property-read Collection|Tag[] $tags
@@ -57,5 +58,10 @@ class Article extends Model implements HasMedia
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class, 'article_tags', 'article_id', 'tag_id');
+    }
+
+    public function hasAuthor(User $user): bool
+    {
+        return $this->user_id === $user->id;
     }
 }

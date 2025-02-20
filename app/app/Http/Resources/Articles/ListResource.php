@@ -18,6 +18,7 @@ class ListResource extends JsonResource
             'content' => Str::limit($this->content, 400),
             'likes' => $this->likes,
             'views' => $this->views,
+            'user_id' => $this->user_id,
             'imageUrl' => $this->media?->first()?->getFullUrl()
         ];
     }

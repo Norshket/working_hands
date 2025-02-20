@@ -11,6 +11,8 @@ class DeleteController extends Controller
 {
     public function __invoke(Article $article, ArticleService $service): JsonResponse
     {
+        $this->authorize('delete', $article);
+
         return response()->json($service->delete($article));
     }
 }

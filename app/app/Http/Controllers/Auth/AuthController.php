@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\AuthRequest;
+use App\Http\Resources\Auth\AuthUserResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,7 +25,7 @@ class AuthController extends Controller
 
         return response()->json([
             'access_token' => $token,
-            'user' => $user,
+            'user' => AuthUserResource::make($user->load(['roles', 'permissions'])),
         ]);
     }
 

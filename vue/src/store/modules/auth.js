@@ -8,7 +8,9 @@ const state = () => ({
         name: '',
         email: '',
         created_at: '',
-        updated_at: ''
+        updated_at: '',
+        roles: [],
+        permissions: [],
     },
     token: null
 })
@@ -60,7 +62,15 @@ const getters = {
     isAuth: state => state.token !== null,
     user: state => state.user,
     token: state => state.token,
-    access: state => (...accesses) => hasAccess(state.token, ...accesses)
+    access: state => (...accesses) => hasAccess(state.token, ...accesses),
+    isAdmin: state => state.user !== null && isAdmin(state.user),
+    isModerator: state => state.user !== null && isModerator(state.user),
+    role: state => (...roles) =>
+        state.user !== null && hasRole(state.user, ...roles),
+    permission: state => (...permissions) =>
+        state.user !== null && hasPermission(state.user, ...permissions),
+    can: state => (...permissions) =>
+        state.user !== null && can(state.user, ...permissions),
 }
 
 const hasAccess = (token, accesses) => {
@@ -69,6 +79,22 @@ const hasAccess = (token, accesses) => {
     }
     return token === null && accesses.includes('guest')
 }
+
+const hasRole = (user, ...roles) =>
+    Array.isArray(user.roles) && roles.some(role => user.roles.includes(role))
+
+const isAdmin = user => hasRole(user, 'admin')
+
+const isModerator = user => hasRole(user, 'moderator')
+
+const hasPermission = (user, ...permissions) => {
+    return (
+        Array.isArray(user.permissions) &&
+        permissions.some(permission => user.permissions.includes(permission))
+    )
+}
+
+const can = (user, ...permissions) => hasPermission(user, ...permissions)
 
 export default {
     namespaced: true, state, mutations, actions, getters

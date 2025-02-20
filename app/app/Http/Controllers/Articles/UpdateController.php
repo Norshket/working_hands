@@ -12,6 +12,8 @@ class UpdateController extends Controller
 {
     public function __invoke(Article $article, UpdateRequest $request, ArticleService $service)
     {
+        $this->authorize('update', $article);
+
         return ItemResource::make($service->update($article, $request->validated()));
     }
 }

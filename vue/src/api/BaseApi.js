@@ -39,6 +39,10 @@ class BaseApi {
                 store.commit('auth/logout')
                 router.push('/login');
             }
+            if (error.status === 403) {
+                toast.error("тебе здесь не рады")
+                router.back();
+            }
             if (error.status === 500 || error.code === "ERR_NETWORK") {
                 toast.error("чирик @#$^*?! кукук !!!")
             }

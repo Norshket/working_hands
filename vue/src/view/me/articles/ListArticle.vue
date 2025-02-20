@@ -1,7 +1,13 @@
 <template>
   <div class="row  justify-content-between">
     <div class="col-12 mb-4">
-      <router-link class="btn btn-primary" :to="{name:'me.articles.create'}">Create articles</router-link>
+      <router-link
+          v-if="can('articles_create')"
+          class="btn btn-primary"
+          :to="{name:'me.articles.create'}"
+      >
+        Create articles
+      </router-link>
     </div>
 
     <div class=" col-12">
@@ -39,13 +45,13 @@ export default {
     }
   },
 
-  computed: {
-    ...mapGetters('auth', ['user', 'access'])
+  created() {
+    this.getDataList()
   },
 
 
-  created() {
-    this.getDataList()
+  computed: {
+    ...mapGetters('auth', ['user', 'access', 'can'])
   },
 
   methods: {

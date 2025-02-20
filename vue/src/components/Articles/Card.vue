@@ -25,6 +25,7 @@
         </router-link>
 
         <router-link
+            v-if="canUpdate"
             class="btn btn-outline-success m-1"
             :to="{ name: 'me.articles.edit', params:{id: article.id}}"
         >
@@ -33,6 +34,8 @@
 
 
         <button
+            v-if="canDelete"
+
             class="btn btn-outline-danger m-1"
             type="button"
             @click="removeItem(article.id)"
@@ -44,12 +47,12 @@
   </div>
 
 
-
-
 </template>
 
 
 <script>
+import {mapGetters} from "vuex";
+
 export default {
   name: "ArticleCard",
   props: {
@@ -59,6 +62,24 @@ export default {
       }
     }
   },
+
+  computed: {
+    ...mapGetters('auth', ['can', 'isAdmin', 'isModerator', 'user']),
+
+    canDelete() {
+      return (this.can('articles_delete') && this.article.user_id === this.user.id)
+          || this.isModerator
+          || this.isAdmin
+    },
+
+    canUpdate(){
+      return (this.can('articles_update') && this.article.user_id === this.user.id)
+          || this.isModerator
+          || this.isAdmin
+
+    }
+  },
+
   methods: {
     removeItem(articleId) {
       this.$emit('removeItem', articleId)

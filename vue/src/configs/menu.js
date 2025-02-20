@@ -30,7 +30,8 @@ export default [
         key: 'me.articles',
         text: 'My Articles',
         link: {name: 'me.articles'},
-        accesses: [AUTH]
+        accesses: [AUTH],
+        // visibility :
     },
 
 ]

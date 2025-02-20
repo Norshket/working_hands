@@ -11,7 +11,10 @@ class UpdateController extends Controller
 {
     public function __invoke(ArticleComment $comment, UpdateRequest $request, ArticleCommentServices $services)
     {
-        $data = $request->validated();
-        $services->update($comment, $data);
+        $this->authorize('update', $comment);
+
+        $services->update($comment, $request->validated());
+
+        return response()->json(['message' => 'success']);
     }
 }

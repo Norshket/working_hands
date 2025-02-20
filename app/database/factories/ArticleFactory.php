@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Helpers\RoleHelper;
 use App\Models\Article;
 use App\Models\ArticleComment;
 use App\Models\Tag;
@@ -21,7 +22,7 @@ class ArticleFactory extends Factory
     {
         return $this->afterCreating(function (Article $article) {
             ArticleComment::factory()->state(['article_id' => $article->id])->count(4)->create();
-            $tags = Tag::factory()->count(2)->create()->pluck('id');
+            $tags = Tag::inRandomOrder()->limit(2)->get()->pluck('id')->toArray();
             $article->tags()->attach($tags);
         });
     }
@@ -33,10 +34,14 @@ class ArticleFactory extends Factory
      */
     public function definition(): array
     {
+        $user = User::whereHas('roles', fn($query) => $query->where('name', RoleHelper::USER))
+            ->inRandomOrder()
+            ->first();
+
         return [
             'title' => $this->faker->text(10),
             'content' => $this->faker->text(5000),
-            'user_id' => User::factory()->create()->id,
+            'user_id' => $user->id,
             'likes' => rand(1, 100),
             'views' => rand(1, 100),
         ];
