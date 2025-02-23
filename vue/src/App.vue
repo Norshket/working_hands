@@ -8,11 +8,19 @@
 import DefaultLayout from "@/layouts/DefaultLayout.vue";
 import AuthLayout from "@/layouts/AuthLayout.vue";
 
+import centrifuge from "@/widgets/centrifuge"
+
 export default {
   name: 'App',
   components: {
     DefaultLayout,
     AuthLayout,
+  },
+
+  data() {
+    return {
+      centrifuge: null
+    }
   },
 
   computed: {
@@ -25,5 +33,12 @@ export default {
     }
   },
 
+  created() {
+    centrifuge.newSubscription('news')
+        .on('publication', function (ctx) {
+          console.log(ctx.data);
+        })
+        .subscribe();
+  }
 }
 </script>

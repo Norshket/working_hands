@@ -1,0 +1,22 @@
+{
+  "client": {
+    "token": {
+      "hmac_secret_key": "34c5027a-90ca-44a3-b62b-6b3d0deecc82"
+    },
+    "allowed_origins": ["*"]
+  },
+  "http_api": {
+    "key": "a8b94f30-4398-422c-b7b6-360ed416e162"
+  },
+  "admin": {
+    "password": "password",
+    "secret": "secret",
+    "enabled": true
+  },
+
+  "channel": {
+    "without_namespace": {
+      "allow_subscribe_for_client": true
+    }
+  }
+}

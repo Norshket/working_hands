@@ -12,7 +12,8 @@ const state = () => ({
         roles: [],
         permissions: [],
     },
-    token: null
+    token: null,
+    centrifuge_token: null
 })
 
 const mutations = {
@@ -20,12 +21,18 @@ const mutations = {
     auth(state, data) {
         state.user = data.user
         state.token = data.access_token
+        state.centrifuge_token = data.centrifuge_token
     },
 
     logout(state) {
         state.user = null
         state.token = null
+        state.centrifuge_token = null
+    },
 
+    changeAuth(state, data){
+        console.log(data)
+        console.log(state.user)
     }
 }
 const actions = {
@@ -62,6 +69,7 @@ const getters = {
     isAuth: state => state.token !== null,
     user: state => state.user,
     token: state => state.token,
+    centrifugeToken: state => state.centrifuge_token,
     access: state => (...accesses) => hasAccess(state.token, ...accesses),
     isAdmin: state => state.user !== null && isAdmin(state.user),
     isModerator: state => state.user !== null && isModerator(state.user),

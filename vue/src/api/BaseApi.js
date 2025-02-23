@@ -9,7 +9,7 @@ class BaseApi {
     headers = {
         'Content-Type': 'application/json',
     }
-    apiClient
+    #apiClient
 
     constructor(apiUrl = null, headers = null) {
         this.apiClient = axios.create({

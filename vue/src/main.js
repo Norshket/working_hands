@@ -7,6 +7,9 @@ import store from "./store";
 import Toast, {POSITION} from "vue-toastification";
 import {$api} from "@/api";
 
+import "@/subscribers/auth"
+
+
 import './assets/styles/index.css';
 import "vue-toastification/dist/index.css";
 
