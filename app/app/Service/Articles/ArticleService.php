@@ -22,10 +22,10 @@ class ArticleService
     private TagRepository $tagRepository;
 
     public function __construct(
-        ListQueryBuilder  $listBuilder,
-        CacheService      $cacheService,
-        ArticleRepository $articleRepository,
-        TagRepository     $tagRepository
+        ListQueryBuilder $listBuilder,
+        CacheService     $cacheService,
+        ArticleRepository   $articleRepository,
+        TagRepository    $tagRepository
     )
     {
         $this->listBuilder = $listBuilder;

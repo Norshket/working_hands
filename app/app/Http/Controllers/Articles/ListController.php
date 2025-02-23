@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Articles;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Articles\ListRequest;
-use App\Models\Article;
 use App\Service\Articles\ArticleService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
