@@ -26,7 +26,6 @@
 </template>
 
 <script>
-
 import {mapActions, mapGetters} from "vuex";
 
 export default {
@@ -38,32 +37,18 @@ export default {
       default: () => []
     }
   },
-
-  mounted() {
-    this.getFilterMenu(this.menu)
-  },
-
   computed: {
-    ...mapGetters('auth', ['isAuth', "access"]),
+    ...mapGetters('auth', ['isAuth', "access", "can"]),
 
     filterMenu: function () {
-      return this.getFilterMenu(this.menu)
+      return this.menu.filter(menuItem => {
+        return this.access(menuItem.accesses) && (this.can(...menuItem.visibility) || !menuItem.visibility.length)
+      })
     }
   },
 
   methods: {
     ...mapActions('auth', ['logout']),
-
-    getFilterMenu(menu) {
-      const filtered = []
-
-      menu.forEach(menuItem => {
-        if (this.access(menuItem.accesses)) {
-          filtered.push(menuItem)
-        }
-      })
-      return filtered
-    }
   }
 }
 </script>

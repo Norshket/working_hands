@@ -7,42 +7,42 @@ export default [
         text: 'Home',
         link: {name: 'home'},
         accesses: [GUEST, AUTH],
-        visibility: null
+        visibility: []
     },
     {
         key: 'menu.articles',
         text: 'Articles',
         link: {name: 'articles.index'},
         accesses: [GUEST, AUTH],
-        visibility: null
+        visibility: []
     },
     {
         key: 'menu.register',
         text: 'Register',
         link: {name: 'register'},
         accesses: [GUEST],
-        visibility: null
+        visibility: []
     },
     {
         key: 'menu.login',
         text: 'Login',
         link: {name: 'login'},
         accesses: [GUEST],
-        visibility: null
+        visibility: []
     },
     {
         key: 'me.articles',
         text: 'My Articles',
         link: {name: 'me.articles'},
         accesses: [AUTH],
-        visibility : null
+        visibility: ['articles_create']
     },
     {
         key: 'users',
         text: 'Users',
         link: {name: 'users'},
         accesses: [AUTH],
-        visibility : ['users_read']
+        visibility: ['users_read']
     },
 
 ]
