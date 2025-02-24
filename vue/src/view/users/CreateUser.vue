@@ -111,11 +111,8 @@ export default {
 
     async create() {
       let requset = structuredClone(this.form)
-
-      requset.roles = requset.roles.map((tag) => tag.id)
-      requset.permissions = requset.permissions.map((tag) => tag.id)
-
-
+      requset.roles = requset.roles.map((role) => role.id)
+      requset.permissions = requset.permissions.map((permission) => permission.id)
       await $api.users.create(requset)
           .then(() => this.success())
           .catch((error) => this.error(error))
@@ -129,10 +126,6 @@ export default {
       if (error.status === 422) {
         toast.error(error.response.data.message)
       }
-    },
-
-    setFile(image) {
-      this.form.image = image
     },
   }
 }

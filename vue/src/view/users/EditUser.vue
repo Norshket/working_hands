@@ -105,7 +105,8 @@ export default {
 
     setData(data) {
       this.setForm(data.user)
-      this.tags = data.tags
+      this.roles = data.roles
+      this.permissions = data.permissions
     },
 
     setForm(user) {
@@ -120,8 +121,8 @@ export default {
 
       let requset = structuredClone(this.form)
 
-      requset.roles = requset.roles.map((tag) => tag.id)
-      requset.permissions = requset.permissions.map((tag) => tag.id)
+      requset.roles = requset.roles.map((role) => role.id)
+      requset.permissions = requset.permissions.map((permission) => permission.id)
 
       await $api.users.update(this.$route.params.id, requset)
           .then(() => this.success())
@@ -136,10 +137,6 @@ export default {
       if (error.status === 422) {
         toast.error(error.response.data.message)
       }
-    },
-
-    setFile(image) {
-      this.form.image = image
     },
   }
 }

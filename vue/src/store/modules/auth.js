@@ -30,9 +30,8 @@ const mutations = {
         state.centrifuge_token = null
     },
 
-    changeAuth(state, data){
-        console.log(data)
-        console.log(state.user)
+    changeAuth(state, data) {
+        state.user = data.user
     }
 }
 const actions = {
@@ -67,6 +66,7 @@ const actions = {
 }
 const getters = {
     isAuth: state => state.token !== null,
+    id: state => state.user.id,
     user: state => state.user,
     token: state => state.token,
     centrifugeToken: state => state.centrifuge_token,

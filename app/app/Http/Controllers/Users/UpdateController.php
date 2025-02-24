@@ -13,6 +13,7 @@ class UpdateController extends Controller
     public function __invoke(User $user, UpdateRequest $request, UserService $service)
     {
         $this->authorize('update', $user);
+
         return ItemResource::make($service->update($user, $request->validated()));
     }
 }

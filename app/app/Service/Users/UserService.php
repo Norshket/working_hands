@@ -2,6 +2,7 @@
 
 namespace App\Service\Users;
 
+use App\Events\ChangeUser;
 use App\Http\Database\ListQueryBuilder;
 use App\Http\Resources\Permissions\ListResource as PermissionResource;
 use App\Http\Resources\Roles\ListResource as RoleResource;
@@ -78,13 +79,16 @@ class UserService
         $user = User::create($data);
 
         if (isset($data['roles'])) {
-            $user->roles()->sync($data['roles']);
+            $user->roles->sync($data['roles']);
         }
         if (isset($data['permissions'])) {
-            $user->permissions()->sync($data['permissions']);
+            $user->permissions->sync($data['permissions']);
         }
 
-        return $user->load(['roles', 'permissions']);
+        $user->load(['roles', 'permissions']);
+
+        ChangeUser::dispatch($user);
+        return $user;
     }
 
     public function update(User $user, array $data): User
@@ -95,7 +99,17 @@ class UserService
 
         $user = tap($user)->update($data);
 
-        return $user->load(['roles', 'permissions']);
+        if (isset($data['roles'])) {
+            $user->roles()->sync($data['roles']);
+        }
+        if (isset($data['permissions'])) {
+            $user->permissions()->sync($data['permissions']);
+        }
+
+        $user->load(['roles', 'permissions']);
+
+        ChangeUser::dispatch($user);
+        return $user;
     }
 
     public function delete(User $user): bool

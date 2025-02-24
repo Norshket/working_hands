@@ -14,7 +14,6 @@ class StoreController extends Controller
     {
         $this->authorize('create', User::class);
 
-
         return ItemResource::make($services->store($request->validated()));
     }
 }
