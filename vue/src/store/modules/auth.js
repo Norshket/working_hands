@@ -25,7 +25,7 @@ const mutations = {
     },
 
     logout(state) {
-        state.user = null
+        state.user = {}
         state.token = null
         state.centrifuge_token = null
     },
@@ -66,7 +66,7 @@ const actions = {
 }
 const getters = {
     isAuth: state => state.token !== null,
-    id: state => state.user.id,
+    id: state => state.user?.id,
     user: state => state.user,
     token: state => state.token,
     centrifugeToken: state => state.centrifuge_token,

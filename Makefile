@@ -1,4 +1,4 @@
-init: docker-down-clea[centrifugo](docker%2Fcentrifugo)r docker-pull docker-build docker-up wh-init
+init: docker-down-clear docker-pull docker-build docker-up wh-init
 
 revive-node:
 	docker compose run --rm wh-node npm install
